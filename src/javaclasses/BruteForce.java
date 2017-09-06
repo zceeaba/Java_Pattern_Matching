@@ -1,8 +1,10 @@
 package javaclasses;
 
 import java.util.*;
+import javaclasses.LevenshteinDistance;
 
 public class BruteForce {
+    public LevenshteinDistance tester=new LevenshteinDistance();
     public Set<ArrayList<Integer>> computeBruteForce(String a, String b) {
         int M = a.length();
         int N = b.length();
@@ -18,6 +20,8 @@ public class BruteForce {
                 if (this.match(fs, ss)) {
                     count += 1;
                 }
+                int levenshteinresult=tester.computeLevenshtein(fs,ss);
+                System.out.println("Levenshtein distance is"+ levenshteinresult);
                 System.out.println(fs);
                 System.out.println(ss);
                 Map<Integer, Map<Integer, Map<Character, Character>>> newmap=this.charactermatch(fs,ss);
@@ -40,6 +44,9 @@ public class BruteForce {
         retset.add(aset);
         retset.add(cherset);
         return retset;
+    }
+    public void retbf(){
+
     }
 
     public boolean match(String pattern, String textshort) {
