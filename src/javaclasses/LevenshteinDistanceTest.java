@@ -33,7 +33,8 @@ public class LevenshteinDistanceTest {
                 {"Abhishekh", "Absheikh", 3},
                 {"Griffin", "GrifFin", 0},
                 {"O'Brien", "OBrien", 1},
-                {"O'Brien", "Brien", 2}
+                {"O'Brien", "Brien", 2},
+                {"University of Birmingham", "Birmingham University", 14}
         });
     }
 

@@ -9,10 +9,10 @@ public class LevenshteinDistance {
     public int computeLevenshtein(String a, String b) {
         int sizestringa = a.length();
         int sizestringb = b.length();
-        int[][] mat = new int[30][30];
+        int[][] mat = new int[200][200];
         ArrayList<Integer> cost = new ArrayList<Integer>();
 
-        String[] lev = new String[20];
+        String[] lev = new String[100];
         a = a.toLowerCase();
         b = b.toLowerCase();
         for (int k = 0; k < (sizestringa); k++) {
@@ -25,7 +25,7 @@ public class LevenshteinDistance {
             for (int j = 1; j <= (sizestringb); j++) {
                 char ac = a.charAt(i - 1);
                 char bc = b.charAt(j - 1);
-                System.out.println(" " + ac + " " + bc);
+                //System.out.println(" " + ac + " " + bc);
                 if (ac == bc) {
                     cost.add(0);
                 } else {
@@ -36,7 +36,7 @@ public class LevenshteinDistance {
         }
         for (int k = 0; k <= sizestringa; k++) {
             for (int j = 0; j <= sizestringb; j++) {
-                System.out.println(mat[k][j]);
+                //System.out.println(mat[k][j]);
             }
         }
         return mat[sizestringa][sizestringb];

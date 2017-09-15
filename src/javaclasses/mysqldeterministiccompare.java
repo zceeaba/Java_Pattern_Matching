@@ -6,7 +6,10 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-
+import javaclasses.BruteForce;
+import javaclasses.LevenshteinDistance;
+import java.io.File;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
 
@@ -16,6 +19,7 @@ import com.google.common.collect.Multiset;
 
 public class mysqldeterministiccompare
 {
+    public LevenshteinDistance lv=new LevenshteinDistance();
     public static void main(String[] args)
     {   long startTime=System.nanoTime();
         //new mysqldeterministiccompare().datafetch();
@@ -34,6 +38,7 @@ public class mysqldeterministiccompare
     public Multimap<String,ArrayList<String>> mi=ArrayListMultimap.create();
     public Multimap<String,ArrayList<String>> mp=ArrayListMultimap.create();
 
+    public BruteForce bf=new BruteForce();
 
     public void datalevenshteinfetch(){
         try {
@@ -128,16 +133,74 @@ public class mysqldeterministiccompare
         }
         System.out.println(ct);
 
+        ArrayList<Set<ArrayList<Integer>>> mainlist=new ArrayList<Set<ArrayList<Integer>>>();
+        Map<String,Integer> scores=new HashMap<String, Integer>();
+        /*
         for(String a:x){
             //System.out.println(mp.get(a));
             //System.out.println(a);
-            StringBuilder v=new StringBuilder("AS");
-            if(a.equals(v.toString())){
-                //System.out.println(a.toString());
-                //System.out.println("BABBA");
+
+            System.out.println(a);
+
+            if(y.contains(a))
+            {
+                System.out.println(mp.get(a).size());
+                System.out.println(mp.get(a));
+                System.out.println(mi.get(a).size());
+                System.out.println(mi.get(a));
+                System.out.println("count");
+                System.out.println(count);
+                for(ArrayList<String> object : mp.get(a))
+                {
+                    for(ArrayList<String> objecti:mi.get(a)) {
+                        //System.out.println(objecti);
+                        if (object.get(0).length() == 0 || objecti.get(0).length() == 0||object.get(1).length()==0
+                                ||object.get(2).length()==0||objecti.get(1).length()==0||objecti.get(2).length()==0
+                                ||objecti.get(3).length()==0)
+                        {
+
+                            //System.out.println("Incompatible data");
+                        }
+                        else
+                        {
+                            File file=new File("C:\\Users\\Sif49882\\IdeaProjects\\json parser\\src\\javaclasses\\error.txt");
+                            try {
+                                PrintWriter writer = new PrintWriter(file);
+                            try {
+                                AlgorithmWeighting aw = new AlgorithmWeighting(object.get(2), objecti.get(3));
+                                int score=aw.getscore();
+                                scores.put(object.get(2)+" "+objecti.get(3),score);
+                                aw=null;
+                            }
+                            catch (Exception e){
+                                writer.write(e.toString());
+                            }
+                            }
+                            catch (Exception e){
+                               System.out.println("error");
+                            }
+                            if (object.get(0).equals(objecti.get(1)) || object.get(0).charAt(0) == objecti.get(1).charAt(0))
+                            {
+                                if (object.get(1).equals(objecti.get(2)))
+                                {
+                                    if (object.get(2).equals(objecti.get(3)))
+                                    {
+                                        mainlist.add(bf.computeBruteForce(object.get(2),objecti.get(3)));
+                                        count += 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            //System.out.println(a.getClass());
-            //System.out.println(mi.get(v));
+
+        }
+        */
+        for(String a:x){
+            //System.out.println(mp.get(a));
+            //System.out.println(a);
+
             System.out.println(a);
 
             if(y.contains(a))
@@ -169,15 +232,16 @@ public class mysqldeterministiccompare
                         {
                             if (object.get(0).equals(objecti.get(1)) || object.get(0).charAt(0) == objecti.get(1).charAt(0))
                             {
-                                if (object.get(1).equals(objecti.get(2)))
+                                if (lv.computeLevenshtein(object.get(1),objecti.get(2))<2)
                                 {
-                                    if (object.get(2).equals(objecti.get(3)))
+                                    if (lv.computeLevenshtein(object.get(2),objecti.get(3))<5)
                                     {   /*System.out.println(object.get(0));
                                         System.out.println(object.get(1));
                                         System.out.println(objecti.get(2));
                                         System.out.println(object.get(2));
                                         System.out.println(objecti.get(3));
                                         */
+                                        mainlist.add(bf.computeBruteForce(object.get(2),objecti.get(3)));
                                         count += 1;
                                     }
                                 }
@@ -188,7 +252,6 @@ public class mysqldeterministiccompare
             }
 
         }
-
 
         //System.out.println(y);
         /*
@@ -217,6 +280,9 @@ public class mysqldeterministiccompare
         */
 
         System.out.println(count);
+        System.out.println(mainlist);
+        System.out.println(scores);
+
     }
     public void datafetch(){
         try {

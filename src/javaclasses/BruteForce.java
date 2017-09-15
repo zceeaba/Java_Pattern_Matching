@@ -21,12 +21,12 @@ public class BruteForce {
                     count += 1;
                 }
                 int levenshteinresult=tester.computeLevenshtein(fs,ss);
-                System.out.println("Levenshtein distance is"+ levenshteinresult);
-                System.out.println(fs);
-                System.out.println(ss);
+                //System.out.println("Levenshtein distance is"+ levenshteinresult);
+                //System.out.println(fs);
+                //System.out.println(ss);
                 Map<Integer, Map<Integer, Map<Character, Character>>> newmap=this.charactermatch(fs,ss);
                 charactererrors=(Integer) (newmap.keySet().toArray()[0]);
-                System.out.println(charactererrors);
+                //System.out.println(charactererrors);
                 cherset.add(charactererrors);
                 Set<String > stringset=new HashSet<String>();
                 stringset.add(fs);
@@ -34,9 +34,11 @@ public class BruteForce {
                 chermap.put(charactererrors,stringset);
             }
         }
+        /*
         for(Object i:chermap.keySet().toArray()){
             System.out.println(i);
         }
+        */
         ArrayList<Integer> aset=new ArrayList<Integer>();
         aset.add(count);
         //set.add(charactererrors);
